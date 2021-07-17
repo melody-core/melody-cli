@@ -105,3 +105,12 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
     melody publish 
 ```
 
+## 开发文档
+
+### commander
+如果你想开发套件，甚至参与melody-cli的开发，建议你先玩一下commander，因为melody-cli和套件原则上都是基于它开发的。 <br>
+它的官方文档地址：
+https://github.com/tj/commander.js/blob/HEAD/Readme_zh-CN.md
+
+
+
