@@ -20,16 +20,14 @@ function getPlugins() {
   .then(json => {
     // 取出包信息
     const list = json.packages.objects;
-    const list2 = []
-    list.map(item => {
-      const obj = {
+    const pluginList = list.map(item => {
+      return {
         name: item.name,
         version: item.version,
-        description: item.name
+        description: item.description
       }
-      list2.push(obj);
     })
-    console.table(list2);
+    console.table(pluginList);
   })
 }
 
