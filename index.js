@@ -10,7 +10,16 @@ const remove = require('./libs/remove');
 const update = require('./libs/update');
 
 class Leo {
-   start() {
+  async checkVersion (){
+    console.log('checkVersion');
+    // todo sth
+    //if 更新 => process.exit();
+  }
+   async start() {
+
+    // 检测本地cli版本是否是最新版本
+    await this.checkVersion();
+
     // 版本
     program
       .version(require("./package.json").version)
