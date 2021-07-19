@@ -50,7 +50,6 @@ module.exports = async function installPackage(pluginName, packageList){
     }
     spinner.stop();
     console.log(chalk.green('安装成功！执行melody即可查看您新增的命令!'));
-    process.exit();
 }
 
 

@@ -7,6 +7,7 @@ const install = require('./libs/install');
 const cache = require('./cache/index.json');
 const path = require('path');
 const remove = require('./libs/remove');
+const update = require('./libs/update');
 
 class Leo {
    start() {
@@ -55,34 +56,49 @@ class Leo {
             } catch (error) {
                 console.error(error);
                 console.error('安装失败，请运行命令: melody doctor, 以修复你的melody-cli。');
-                process.exit();
             }
+            process.exit();
         })
 
     // 删除套件
     program.command("remove <package>")
       .description("删除套件")
-      .action(async(pk) => {
+      .action(async (pk) => {
          try {
            await remove(pk);
          } catch (error) {
           console.error(error);
           console.error('卸载失败，请运行命令: melody doctor, 以修复你的melody-cli。');
-          process.exit();
          }
+         process.exit();
       })
+
+    // 更新套件
+    program.command("update [package]")
+    .description("更新套件")
+    .action( async (pk) => {
+      try {
+        await update(pk);
+      } catch (error) {
+        console.error(error);
+        console.error('更新失败,您的网络环境是否正常?');
+      }
+      process.exit();
+    })
 
     // 套件扩展命令
     cache.forEach(item => {
         const { bin, desc, name } = item;
         let binString = '';
+        let filePath = './index.js';
         if(typeof bin === 'string'){
             binString = bin;
         }else{
             binString = Object.keys(bin)[0] || '???';
+            filePath = bin[binString];
         }
         program.command(binString, desc, {
-          executableFile: path.resolve(__dirname, `./node_modules/${name}/index.js`)
+          executableFile: path.resolve(__dirname, `./node_modules/${name}`, filePath)
         })
     })
     program.parse(process.argv);
