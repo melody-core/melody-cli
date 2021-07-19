@@ -5,8 +5,8 @@ const program = new Command();
 const getPlugins = require('./libs/getPlugins');
 const install = require('./libs/install');
 const cache = require('./cache/index.json');
-const path = require('path')
-const { shell } = require('./libs/shell')
+const path = require('path');
+const remove = require('./libs/remove');
 
 class Leo {
    start() {
@@ -26,7 +26,7 @@ class Leo {
                   plugin: item.name,
                   version: item.version,
                   desc: item.description,
-                  authors: item.maintainers
+                  install: cache.find(cacheItem => cacheItem.name === item.name) ? "已安装" : "未安装"
                 }
               })
             console.table(pluginList);
@@ -43,7 +43,6 @@ class Leo {
     program.command("install <package>")
         .description("安装套件")
         .action(async (pk) => {
-            console.log(pk)
             let packageList = [] 
             try {
                 packageList = await getPlugins();
@@ -59,6 +58,19 @@ class Leo {
                 process.exit();
             }
         })
+
+    // 删除套件
+    program.command("remove <package>")
+      .description("删除套件")
+      .action(async(pk) => {
+         try {
+           await remove(pk);
+         } catch (error) {
+          console.error(error);
+          console.error('卸载失败，请运行命令: melody doctor, 以修复你的melody-cli。');
+          process.exit();
+         }
+      })
 
     // 套件扩展命令
     cache.forEach(item => {

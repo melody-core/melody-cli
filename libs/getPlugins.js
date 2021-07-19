@@ -25,7 +25,7 @@ function getPlugins() {
     console.log(chalk.green('检索完毕!'))
     const { packages = {} } = json || {};
     const { objects = [] } = packages;
-    return objects;
+    return objects.filter(item => item.name !== "@melody-core/melody-cli");
   })
 }
 
