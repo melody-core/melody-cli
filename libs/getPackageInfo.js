@@ -16,7 +16,6 @@ module.exports = function getPackageInfo(pk){
             // 取出包信息
             const { package, packageVersion = {} } = json || {};
             const { version = '???', description = '' } = packageVersion;
-            console.log(packageVersion)
             return {
                 name: package,
                 version,
