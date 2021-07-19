@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
-const chalk = require('chalk');
-const log = console.log;
 // 搜索melody-core包接口地址
 const url = 'https://www.npmjs.com/org/melody-core'
+const ora = require('ora');
+const chalk = require('chalk')
 
 /**
  * @description: 获取npm包的信息
@@ -10,7 +10,9 @@ const url = 'https://www.npmjs.com/org/melody-core'
  * @return {*}
  */
 function getPlugins() {
-  fetch(url, {
+  const spinner = ora('正在进行检索，请等待...');
+  spinner.start();
+  return fetch(url, {
     headers: {
       "x-requested-with": "XMLHttpRequest",
       "x-spiferack": 1
@@ -19,16 +21,12 @@ function getPlugins() {
   .then(res=>res.json())
   .then(json => {
     // 取出包信息
-    const list = json.packages.objects;
-    const pluginList = list.map(item => {
-      return {
-        name: item.name,
-        version: item.version,
-        description: item.description
-      }
-    })
-    console.table(pluginList);
+    spinner.stop();
+    console.log(chalk.green('检索完毕!'))
+    const { packages = {} } = json || {};
+    const { objects = [] } = packages;
+    return objects;
   })
 }
 
-getPlugins();
+module.exports = getPlugins;

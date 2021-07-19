@@ -11,7 +11,7 @@
 而小明期望的，就是@melody-core/melody-cli的存在意义。
 
 ## 快速使用
-> node版本支持: >=8.0.0 
+> node版本支持: >=8.0.0  本地需要安装yarn
 
 ```shell
     # 安装

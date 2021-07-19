@@ -1,15 +1,31 @@
 {
   "name": "@melody-core/melody-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "(音巢组织)命令行集成管理工具",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "bin": {
+    "melody": "./index.js"
+  },
+  "contributors": [
+    {
+      "name": "wxydesign",
+      "email": "18210711176@163.com",
+      "url": "https://github.com/melodyWxy"
+    },
+    {
+      "name": "amjanney",
+      "email": "1547702880@qq.com",
+      "url": "https://github.com/amjanney"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.1",
-    "node-fetch": "^2.6.1"
+    "commander": "^8.0.0",
+    "node-fetch": "^2.6.1",
+    "ora": "^5.4.1"
   }
 }
