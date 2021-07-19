@@ -56,8 +56,8 @@ class Leo {
             } catch (error) {
                 console.error(error);
                 console.error('安装失败，请运行命令: melody doctor, 以修复你的melody-cli。');
-                process.exit();
             }
+            process.exit();
         })
 
     // 删除套件
@@ -69,8 +69,8 @@ class Leo {
          } catch (error) {
           console.error(error);
           console.error('卸载失败，请运行命令: melody doctor, 以修复你的melody-cli。');
-          process.exit();
          }
+         process.exit();
       })
 
     // 更新套件
