@@ -15,7 +15,7 @@
 
 ```shell
     # 安装
-    sudo yarn global add @melody-core/melody-cli
+    yarn global add @melody-core/melody-cli
     # 运行 melody 命令 即可查看帮助和文档
 ```
 
@@ -44,7 +44,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 而每个套件都是独立的npm包，因此它们当然也可以被单独安装使用。
 ```shell
     # 单独安装 @melody-core/leo
-    sudo yarn global add @melody-core/leo
+    yarn global add @melody-core/leo
     # 使用它
     leo  
 ```
