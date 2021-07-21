@@ -6,14 +6,20 @@ const chalk = require('chalk');
 const shell = require('./shell');
 const package = require('./../package.json');
 const inquirer = require('inquirer');
+const timeoutPromise = require('./timeoutPromise');
 
 module.exports = async () => {
     const spinner = ora('🎵正在进行版本检索，请等待...');
     spinner.start();
     let info;
     try {
-       
-        info = await getPackageInfo("@melody-core/melody-cli");
+        info = await Promise.race([getPackageInfo("@melody-core/melody-cli"), timeoutPromise(5000)]);
+        if(!info){
+            spinner.stop();
+            console.log(chalk.yellow('🎵检索超时！'))
+            console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
+            return;
+        }
     } catch (error) {
         spinner.stop();
         console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
