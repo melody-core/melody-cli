@@ -1,6 +1,6 @@
 {
   "name": "@melody-core/melody-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "(音巢组织)命令行集成管理工具",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "commander": "^8.0.0",
+    "inquirer": "^8.1.2",
     "node-fetch": "^2.6.1",
     "ora": "^5.4.1"
   }

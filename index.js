@@ -8,17 +8,15 @@ const cache = require('./cache/index.json');
 const path = require('path');
 const remove = require('./libs/remove');
 const update = require('./libs/update');
+const checkCliVersion = require('./libs/checkCliVersion');
+
 
 class Leo {
-  async checkVersion (){
-    console.log('checkVersion');
-    // todo sth
-    //if 更新 => process.exit();
-  }
-   async start() {
 
+
+  async start() {
     // 检测本地cli版本是否是最新版本
-    await this.checkVersion();
+    await checkCliVersion();
 
     // 版本
     program
@@ -43,7 +41,7 @@ class Leo {
             process.exit();
           } catch (error) {
             console.log(error)
-            console.error('获取远端套件列表失败，请检测网络环境是否友好。');
+            console.error('🎵获取远端套件列表失败，请检测网络环境是否友好。');
             process.exit();
           }
         })
