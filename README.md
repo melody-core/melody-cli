@@ -79,7 +79,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 | -- | ---- |----- | ----- | -------------|
 | @melody-core/leo | leo | 生成模板的脚手架命令 | melody leo [command] [options]| 一个便捷集成和管理项目模板的脚手架命令行工具 |
 
-## 自定义套件
+## 自定义套件/套件开发
 
 ### 套件开发
 > 你可以自由的开发自定义套件并在melody-cli中集成它，我们为您提供了 melody-kit-template 模板，您可以用过leo来选择它快速生成您的项目
@@ -87,7 +87,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 ```shell
    # 前置，安装了leo套件，并且在联网环境(为了拉下模板)。
    melody leo init 
-   # 此处选择  melody-kit-template 即可。
+   # 此处选择  melody-plugin-template 即可。
 ```
 
 ### 使用开发模式来调试您的套件
