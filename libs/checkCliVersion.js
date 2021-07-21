@@ -9,14 +9,14 @@ const inquirer = require('inquirer');
 const timeoutPromise = require('./timeoutPromise');
 
 module.exports = async () => {
-    const spinner = ora('🎵正在进行版本检索，请等待...');
+    const spinner = ora('🎵正在进行@melody-core/melody-cli的版本检索，请等待...');
     spinner.start();
     let info;
     try {
         info = await Promise.race([getPackageInfo("@melody-core/melody-cli"), timeoutPromise(5000)]);
         if(!info){
             spinner.stop();
-            console.log(chalk.yellow('🎵检索超时！'))
+            console.log(chalk.yellow('🎵@melody-core/melody-cli检索超时！'))
             console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
             return;
         }
@@ -28,10 +28,10 @@ module.exports = async () => {
     const { version } = info || {};
     spinner.stop();
     if(version === package.version){
-        console.log(chalk.green(`🎵版本检索完毕, 已是最新版本: ${version}`));
+        console.log(chalk.green(`🎵@melody-core/melody-cli版本检索完毕, 已是最新版本: ${version}`));
         return 
     }
-    console.log(chalk.green(`🎵版本检索完毕`));
+    console.log(chalk.green(`🎵@melody-core/melody-cli版本检索完毕`));
     const isNeedUpdate = version ? version !== package.version : false;
     if(isNeedUpdate){
         const iqres = await inquirer.prompt([{
