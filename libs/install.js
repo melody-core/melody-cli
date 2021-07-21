@@ -23,7 +23,7 @@ module.exports = async function installPackage(pluginName, packageList){
     const spinner = ora('🎵正在安装中，请等待...');
     spinner.start();
     try {
-        await shell(`yarn add ${pluginName}`, {
+        await shell(`yarn add ${pluginName} --registry="https://mirrors.huaweicloud.com/repository/npm/"`, {
             cwd: rootPath,
         })
     } catch (error) {
