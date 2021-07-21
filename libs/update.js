@@ -14,7 +14,7 @@ const rootPath = path.resolve(__dirname, '../');
 async function updateSingle(pk){
     const cache = require('./../cache/index.json')
     const spinner = ora('🎵正在更新中，请等待...');
-    const spinner2 = ora('🎵正在检索中，请等待...');
+    const spinner2 = ora('🎵正在检索音巢官方套件列表，请等待...');
     if(pk){
         const cacheItem = cache.find(item => item.name === pk);
         const  { dependencies } = require('../package.json');
@@ -44,7 +44,7 @@ async function updateSingle(pk){
         try {
             info = await getPackageInfo(pk);
             spinner2.stop();
-            console.log(chalk.green('🎵检索完毕'))
+            console.log(chalk.green('🎵音巢官方套件列表已检索完毕!'))
         } catch (error) {
             spinner2.stop();
             console.error(error);
