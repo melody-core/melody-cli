@@ -60,7 +60,7 @@ async function updateSingle(pk){
             // 更新这个包呀
             spinner.start();
             try {
-                await shell(`yarn upgrade ${pk}`, {
+                await shell(`yarn upgrade ${pk} --registry="https://mirrors.huaweicloud.com/repository/npm/"`, {
                     cwd: rootPath
                 })
             } catch (error) {
