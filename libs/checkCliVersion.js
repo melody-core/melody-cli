@@ -45,7 +45,7 @@ module.exports = async () => {
         const spinner2 = ora('🎵版本升级中...');
         spinner2.start();
         try {
-            await shell(`yarn global upgrade @melody-core/melody-cli`);
+            await shell(`yarn global upgrade @melody-core/melody-cl --registry="https://mirrors.huaweicloud.com/repository/npm/"`);
         } catch (error) {
             spinner2.stop();
             console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
