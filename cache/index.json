@@ -1,1 +1,11 @@
-[]
+[
+    {
+        "name": "http-server",
+        "version": "0.12.3",
+        "desc": "ssss",
+        "bin": {
+            "http-server": "./bin/http-server",
+            "hs": "./bin/http-server"
+        }
+    }
+]

@@ -96,7 +96,7 @@ class Leo {
     // 更改套件描述
     program.command("desc <package>")
     .description("更改套件描述")
-    .action( async (pk) => {
+    .action( async(pk) => {
       try {
         await desc(pk);
       } catch (error) {
