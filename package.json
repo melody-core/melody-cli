@@ -25,7 +25,6 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "commander": "^8.0.0",
-    "http-server": "^0.12.3",
     "inquirer": "^8.1.2",
     "node-fetch": "^2.6.1",
     "ora": "^5.4.1"
