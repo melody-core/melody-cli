@@ -3,7 +3,7 @@
 const getPackageInfo = require('./getPackageInfo');
 const ora = require('ora');
 const chalk = require('chalk');
-const shell = require('./shell');
+const { shell } = require('./shell');
 const package = require('./../package.json');
 const inquirer = require('inquirer');
 const timeoutPromise = require('./timeoutPromise');
