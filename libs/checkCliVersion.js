@@ -32,6 +32,9 @@ module.exports = async () => {
         return 
     }
     console.log(chalk.green(`🎵@melody-core/melody-cli版本检索完毕`));
+    if(package.version > version){
+        return ;
+    }
     const isNeedUpdate = version ? version !== package.version : false;
     if(isNeedUpdate){
         const iqres = await inquirer.prompt([{
@@ -45,7 +48,7 @@ module.exports = async () => {
         const spinner2 = ora('🎵版本升级中...');
         spinner2.start();
         try {
-            await shell(`yarn global upgrade @melody-core/melody-cl --registry="https://mirrors.huaweicloud.com/repository/npm/"`);
+            await shell(`yarn global upgrade @melody-core/melody-cli --registry="https://mirrors.huaweicloud.com/repository/npm/"`);
         } catch (error) {
             spinner2.stop();
             console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
