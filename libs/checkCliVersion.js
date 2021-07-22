@@ -32,6 +32,9 @@ module.exports = async () => {
         return 
     }
     console.log(chalk.green(`🎵@melody-core/melody-cli版本检索完毕`));
+    if(package.version > version){
+        return ;
+    }
     const isNeedUpdate = version ? version !== package.version : false;
     if(isNeedUpdate){
         const iqres = await inquirer.prompt([{
