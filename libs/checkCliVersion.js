@@ -13,7 +13,7 @@ module.exports = async () => {
     spinner.start();
     let info;
     try {
-        info = await Promise.race([getPackageInfo("@melody-core/melody-cli"), timeoutPromise(5000)]);
+        info = await Promise.race([getPackageInfo("@melody-core/melody-cli"), timeoutPromise(3000)]);
         if(!info){
             spinner.stop();
             console.log(chalk.yellow('🎵@melody-core/melody-cli检索超时！'))
