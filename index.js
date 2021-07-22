@@ -9,7 +9,7 @@ const path = require('path');
 const remove = require('./libs/remove');
 const update = require('./libs/update');
 const checkCliVersion = require('./libs/checkCliVersion');
-
+const desc = require('./libs/desc');
 
 class Leo {
 
@@ -89,6 +89,19 @@ class Leo {
       } catch (error) {
         console.error(error);
         console.error('更新失败,您的网络环境是否正常?');
+      }
+      process.exit();
+    })
+
+    // 更改套件描述
+    program.command("desc <package>")
+    .description("更改套件描述")
+    .action( async (pk) => {
+      try {
+        await desc(pk);
+      } catch (error) {
+        console.error(error);
+        console.error('🎵 更新描述失败，请运行命令: melody doctor 以修复您的melody');
       }
       process.exit();
     })

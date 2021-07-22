@@ -38,7 +38,7 @@ module.exports = async function installPackage(pluginName, packageList){
     cache.push({
         name: pluginName,
         version: targetPackage.version,
-        desc: targetPlugin ? targetPlugin.description : `未知套件, 您可以通过命令 melody des <pluginName> <description> 来更改它的描述`,
+        desc: targetPlugin ? targetPlugin.description : `未知套件, 您可以通过命令 melody des <${pluginName}> 来更改它的描述`,
         bin: targetPackage.bin || '???'
     })
 
