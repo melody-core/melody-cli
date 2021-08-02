@@ -21,9 +21,8 @@ class Leo {
     // 版本
     program
       .version(require("./package.json").version)
-      .option("-v, --version", "查看当前版本");
-    
-    // 查看套件列表命令
+      .option("-v, --version", "查看当前版本")
+    // 查看官方套件列表命令
     program.command("search")
         .description("列出官方所有套件")
         .action(async () => {
@@ -46,9 +45,25 @@ class Leo {
           }
         })
 
+    // 查看已安装的套件列表
+    program.command("list")
+        .description("列出已安装的套件列表")
+        .action(()=>{
 
+          try {
+            if(!cache.length){
+              console.log('🎵 您尚未安装任意套件。')
+              return ;
+            }
+           console.table(cache);
+          } catch (error) {
+            console.log(error)
+            process.exit();
+          }
+        })
     // 安装套件
     program.command("install <package>")
+        .alias('i')
         .description("安装套件")
         .action(async (pk) => {
             let packageList = [] 
@@ -69,6 +84,7 @@ class Leo {
 
     // 删除套件
     program.command("remove <package>")
+      .alias('delete')
       .description("删除套件")
       .action(async (pk) => {
          try {

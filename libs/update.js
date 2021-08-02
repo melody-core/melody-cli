@@ -10,6 +10,9 @@ const getPackageInfo = require('./getPackageInfo');
 const rootPath = path.resolve(__dirname, '../');
 
 
+let registry = "https://mirrors.huaweicloud.com/repository/npm/";
+
+
 
 async function updateSingle(pk){
     const cache = require('./../cache/index.json')
@@ -60,7 +63,7 @@ async function updateSingle(pk){
             // 更新这个包呀
             spinner.start();
             try {
-                await shell(`yarn upgrade ${pk} --registry="https://mirrors.huaweicloud.com/repository/npm/"`, {
+                await shell(`yarn upgrade ${pk} --registry="${registry}"`, {
                     cwd: rootPath
                 })
             } catch (error) {

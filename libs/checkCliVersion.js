@@ -7,6 +7,13 @@ const { shell } = require('./shell');
 const package = require('./../package.json');
 const inquirer = require('inquirer');
 const timeoutPromise = require('./timeoutPromise');
+const getPlugins = require('./getPlugins');
+const cache = require('./../cache/index.json');
+const install = require('./install')
+
+let registry = "https://mirrors.huaweicloud.com/repository/npm/";
+
+
 
 module.exports = async () => {
     const spinner = ora('🎵正在进行@melody-core/melody-cli的版本检索，请等待...');
@@ -48,13 +55,27 @@ module.exports = async () => {
         const spinner2 = ora('🎵版本升级中...');
         spinner2.start();
         try {
-            await shell(`yarn global upgrade @melody-core/melody-cli --registry="https://mirrors.huaweicloud.com/repository/npm/"`);
+            await shell(`yarn global upgrade @melody-core/melody-cli --registry="${registry}"`);
         } catch (error) {
             spinner2.stop();
             console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
             return;
         }
         spinner2.stop();
+        const spinner3 = ora('🎵正在同步已安装的套件...');
+        spinner3.start();
+        try {
+            const packageList = await getPlugins();
+            cache.forEach(async (item) => {
+                await install(item.name, packageList);
+            } )
+            
+        } catch (error) {
+            spinner3.stop();
+            console.error(error);
+            console.log(chalk.yellow('🎵来自音巢的提醒: 您的网络环境不太友好，可能会导致melody相关命令执行失败。'))
+            return;
+        }
         console.log(chalk.green(`🎵升级完毕!请重新使用melody命令吧～`));
         process.exit();
     }

@@ -6,6 +6,9 @@ const ora = require('ora');
 const { shell } = require('./shell')
 
 
+let registry = "https://mirrors.huaweicloud.com/repository/npm/";
+
+
 module.exports = async function installPackage(pluginName, packageList){
     if(!pluginName){
         console.error('🎵缺少package参数！');
@@ -23,7 +26,7 @@ module.exports = async function installPackage(pluginName, packageList){
     const spinner = ora('🎵正在安装中，请等待...');
     spinner.start();
     try {
-        await shell(`yarn add ${pluginName} --registry="https://mirrors.huaweicloud.com/repository/npm/"`, {
+        await shell(`yarn add ${pluginName} --registry="${registry}"`, {
             cwd: rootPath,
         })
     } catch (error) {
@@ -38,7 +41,7 @@ module.exports = async function installPackage(pluginName, packageList){
     cache.push({
         name: pluginName,
         version: targetPackage.version,
-        desc: targetPlugin ? targetPlugin.description : `未知套件, 您可以通过命令 melody des <${pluginName}> 来更改它的描述`,
+        desc: targetPlugin ? targetPlugin.description : `未知套件, 您可以通过命令 melody desc <${pluginName}> 来更改它的描述`,
         bin: targetPackage.bin || '???'
     })
 
