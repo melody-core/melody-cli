@@ -1,6 +1,6 @@
 {
   "name": "@melody-core/melody-cli",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "(音巢组织)命令行集成管理工具",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,13 @@
     "melody": "./index.js"
   },
   "author": "wxyDesign",
+  "keywords": [
+    "melody",
+    "melody-core",
+    "melody-cli",
+    "cli-manage",
+    "@melody-core"
+  ],
   "contributors": [
     {
       "name": "wxydesign",
