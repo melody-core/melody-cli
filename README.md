@@ -56,6 +56,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 
     Commands:
     search             列出官方所有套件
+    list               列出已安装的套件列表
     install <package>  安装套件
     remove <package>   删除套件
     update [package]   更新套件
@@ -105,7 +106,8 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 
 | 命令 | 描述 |  具体使用 | 补充  |
 | -- | ----- | ----- | -------------|
-| melody search |  查询套件 |  melody search [package] | 不填参数时，默认查找所有melody-cli套件 |
+| melody search |  查询官方套件列表 |  melody search | 列出所有melody-cli官方套件 |
+| melody list |  查询已安装套件列表 |  melody list| 列出所有已安装的套件 |
 | melody install | 安装套件 | melody install <package> | package必填，例：melody install @melody-core/leo |
 | melody remove | 删除套件 | melody remove <package> | package必填，例：melody remove @melody-core/leo |
 | melody update | 更新套件 | melody update [package] | 不填参数时，默认更新所有melody-cli套件 |
