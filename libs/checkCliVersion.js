@@ -100,6 +100,7 @@ module.exports = async () => {
       return;
     }
     console.log(chalk.green(`🎵升级完毕!请重新使用melody命令吧～`));
+    process.exit();
   }
   return;
 };
