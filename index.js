@@ -55,7 +55,12 @@ class Leo {
               console.log('🎵 您尚未安装任意套件。')
               return ;
             }
-           console.table(cache);
+           const logList = cache.map((item => ({
+              pluginName: item.name,
+              version: item.version,
+              desc: item.desc
+           })))  
+           console.table(logList);
           } catch (error) {
             console.log(error)
             process.exit();
