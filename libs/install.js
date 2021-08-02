@@ -43,14 +43,16 @@ module.exports = async function installPackage(
   const targetPlugin = packageList.find((item) => item.name === pluginName);
   const targetPackage = require(`./../node_modules/${pluginName}/package.json`);
   // console.log('targetPackage', targetPackage)
-  cache.push({
-    name: pluginName,
-    version: targetPackage.version,
-    desc: targetPlugin
-      ? targetPlugin.description
-      : `未知套件, 您可以通过命令 melody desc <${pluginName}> 来更改它的描述`,
-    bin: targetPackage.bin || "???",
-  });
+  if (!cuCache) {
+    cache.push({
+      name: pluginName,
+      version: targetPackage.version,
+      desc: targetPlugin
+        ? targetPlugin.description
+        : `未知套件, 您可以通过命令 melody desc <${pluginName}> 来更改它的描述`,
+      bin: targetPackage.bin || "???",
+    });
+  }
 
   try {
     fs.writeFileSync(

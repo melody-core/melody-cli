@@ -85,10 +85,10 @@ module.exports = async () => {
     spinner3.start();
     try {
       const packageList = await getPlugins();
-      let cuCache = [];
-      cache.forEach(async (item, index) => {
-        await install(item.name, packageList, cuCache);
-      });
+      for(let i in cache) {
+        await install(cache[i].name, packageList, cache);
+      }
+      spinner3.stop();
     } catch (error) {
       spinner3.stop();
       console.error(error);
@@ -100,7 +100,6 @@ module.exports = async () => {
       return;
     }
     console.log(chalk.green(`🎵升级完毕!请重新使用melody命令吧～`));
-    process.exit();
   }
   return;
 };
