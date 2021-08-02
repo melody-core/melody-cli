@@ -111,7 +111,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
 | melody install | 安装套件 | melody install <package> | package必填，例：melody install @melody-core/leo |
 | melody remove | 删除套件 | melody remove <package> | package必填，例：melody remove @melody-core/leo |
 | melody update | 更新套件 | melody update [package] | 不填参数时，默认更新所有melody-cli套件 |
-| melody desc ｜ 更改套件的描述 | melody desc <package> | package必填, 例: melody desc http-server |
+| melody desc | 更改套件的描述 | melody desc <package> | package必填, 例: melody desc http-server |
 ## 官方套件
 > 运行命令 melody search 即可查看所有官方命令行套件哦
 
