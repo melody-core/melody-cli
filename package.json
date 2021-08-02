@@ -9,6 +9,7 @@
   "bin": {
     "melody": "./index.js"
   },
+  "author": "wxyDesign",
   "contributors": [
     {
       "name": "wxydesign",
