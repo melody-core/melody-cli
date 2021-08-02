@@ -66,8 +66,9 @@ module.exports = async () => {
         spinner3.start();
         try {
             const packageList = await getPlugins();
-            cache.forEach(async (item) => {
-                await install(item.name, packageList);
+            let cuCache = [];
+            cache.forEach(async (item, index) => {
+                await install(item.name, packageList, cuCache);
             } )
             
         } catch (error) {

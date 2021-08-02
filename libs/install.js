@@ -9,19 +9,19 @@ const { shell } = require('./shell')
 let registry = "https://mirrors.huaweicloud.com/repository/npm/";
 
 
-module.exports = async function installPackage(pluginName, packageList){
+module.exports = async function installPackage(pluginName, packageList, cuCache){
     if(!pluginName){
         console.error('🎵缺少package参数！');
         process.exit();
     }
     const rootPath = path.resolve(__dirname, '../');
     // 1 获取ceche
-    const cache = require('./../cache/index.json');
+    const cache = cuCache ? cuCache : require('./../cache/index.json');
     const pkj = require('./../package.json');
     const { dependencies = {} } = pkj
-    if(dependencies[pluginName]){
+    if(!cuCache && dependencies[pluginName]){
         console.log(`${chalk.yellow('🎵检测您已经安装过此套件，无须再次安装，如果需要更新套件版本，请执行命令：melody update')}`);
-        process.exit();
+        return;
     }
     const spinner = ora('🎵正在安装中，请等待...');
     spinner.start();
