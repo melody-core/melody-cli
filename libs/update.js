@@ -11,14 +11,14 @@ let registry = "https://mirrors.huaweicloud.com/repository/npm/";
 
 async function updateSingle(pk) {
   const cache = require("./../cache/index.json");
-  const spinner = ora("🎵正在更新中，请等待...");
-  const spinner2 = ora("🎵正在检索音巢官方套件列表，请等待...");
+  const spinner = ora("🎵 正在更新中，请等待...");
+  const spinner2 = ora("🎵 正在检索音巢官方套件列表，请等待...");
   if (pk) {
     const cacheItem = cache.find((item) => item.name === pk);
     const { dependencies } = require("../package.json");
     if (!dependencies[pk] && !cacheItem) {
       console.log(
-        chalk.yellow("🎵检测到您尚未安装过此套件,您可以运行以下命令安装该套件:")
+        chalk.yellow("🎵 检测到您尚未安装过此套件,您可以运行以下命令安装该套件:")
       );
       console.log(chalk.blue(`melody install ${pk}`));
       return;
@@ -33,7 +33,7 @@ async function updateSingle(pk) {
       } catch (error) {
         spinner.stop();
         console.error(error);
-        console.error("🎵更新失败，您的网络环境是否正常?");
+        console.error("🎵 更新失败，您的网络环境是否正常?");
         return;
       }
       return;
@@ -44,17 +44,17 @@ async function updateSingle(pk) {
     try {
       info = await getPackageInfo(pk);
       spinner2.stop();
-      console.log(chalk.green("🎵音巢官方套件列表已检索完毕!"));
+      console.log(chalk.green("🎵 音巢官方套件列表已检索完毕!"));
     } catch (error) {
       spinner2.stop();
       console.error(error);
-      console.error("🎵检索失败，您的网络环境是否正常?");
+      console.error("🎵 检索失败，您的网络环境是否正常?");
       return;
     }
     // 比对version
     if (version === info.version) {
       console.log(
-        chalk.green(`🎵套件: ${pk} 已是最新版本，version: ${info.version}`)
+        chalk.green(`🎵 套件: ${pk} 已是最新版本，version: ${info.version}`)
       );
       return;
     } else {
@@ -66,7 +66,7 @@ async function updateSingle(pk) {
         });
       } catch (error) {
         spinner.stop();
-        console.log(chalk.yellow(`🎵套件${pk} 更新失败，请检测网络环境`));
+        console.log(chalk.yellow(`🎵 套件${pk} 更新失败，请检测网络环境`));
         return;
       }
       // 写入缓存
@@ -91,12 +91,12 @@ async function updateSingle(pk) {
         console.error(error);
         console.log(
           chalk.yellow(
-            `🎵套件${pk} 写入缓存失败，请使用命令: melody doctor以修复melody-cli。`
+            `🎵 套件${pk} 写入缓存失败，请使用命令: melody doctor以修复melody-cli。`
           )
         );
       }
       spinner.stop();
-      console.log(chalk.green(`🎵套件:${pk} 更新成功。`));
+      console.log(chalk.green(`🎵 套件:${pk} 更新成功。`));
     }
   }
 }

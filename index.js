@@ -10,6 +10,9 @@ const remove = require("./libs/remove");
 const update = require("./libs/update");
 const checkCliVersion = require("./libs/checkCliVersion");
 const desc = require("./libs/desc");
+const help2Doc = require("./libs/helpToDoc");
+const chalk = require("chalk");
+const timeoutPromise = require("./libs/timeoutPromise");
 
 class Melody {
   async start() {
@@ -41,7 +44,7 @@ class Melody {
           process.exit();
         } catch (error) {
           console.log(error);
-          console.error("🎵获取远端套件列表失败，请检测网络环境是否友好。");
+          console.error("🎵 获取远端套件列表失败，请检测网络环境是否友好。");
           process.exit();
         }
       });
@@ -53,7 +56,8 @@ class Melody {
       .action(() => {
         try {
           if (!cache.length) {
-            console.log("🎵 您尚未安装任意套件。");
+            console.log(chalk.yellow("🎵 您尚未安装任何套件。"));
+            help2Doc();
             return;
           }
           const logList = cache.map((item) => ({
@@ -62,6 +66,7 @@ class Melody {
             desc: item.desc,
           }));
           console.table(logList);
+          help2Doc();
         } catch (error) {
           console.log(error);
           process.exit();
@@ -75,9 +80,17 @@ class Melody {
       .action(async (pk) => {
         let packageList = [];
         try {
-          packageList = await getPlugins();
+          help2Doc();
+          packageList = await Promise.race([
+            getPlugins(), 
+            timeoutPromise(5000),
+          ]);
+          if(!packageList){
+              throw new Error('');
+          }
         } catch (error) {
-          console.error("获取远端套件列表失败，请检测网络环境是否友好。");
+          console.log();
+          console.error(chalk.red("获取远端套件列表失败，请检测网络环境是否友好。"));
           process.exit();
         }
         try {
@@ -99,6 +112,7 @@ class Melody {
       .action(async (pk) => {
         try {
           await remove(pk);
+          help2Doc();
         } catch (error) {
           console.error(error);
           console.error(
@@ -115,6 +129,7 @@ class Melody {
       .action(async (pk) => {
         try {
           await update(pk);
+          help2Doc();
         } catch (error) {
           console.error(error);
           console.error("更新失败,您的网络环境是否正常?");

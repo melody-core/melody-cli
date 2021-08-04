@@ -10,7 +10,7 @@ const chalk = require("chalk");
  * @return {*}
  */
 function getPlugins() {
-  const spinner = ora("🎵正在进行检索音巢官方套件列表，请等待...");
+  const spinner = ora("🎵 正在进行检索音巢官方套件列表，请等待...");
   spinner.start();
   return fetch(url, {
     headers: {
@@ -22,7 +22,7 @@ function getPlugins() {
     .then((json) => {
       // 取出包信息
       spinner.stop();
-      console.log(chalk.green("🎵音巢官方套件列表检索完毕!"));
+      console.log(chalk.green("🎵 音巢官方套件列表检索完毕!"));
       const { packages = {} } = json || {};
       const { objects = [] } = packages;
       return objects.filter((item) => item.name !== "@melody-core/melody-cli");

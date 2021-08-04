@@ -46,7 +46,7 @@ melody-cli，是用来管理命令行工具的命令行工具。这么说可能�
     # 这时我们运行melody发现, 已经拓展了http-server命令
     melody
 
-    🎵@melody-core/melody-cli版本检索完毕, 已是最新版本: 1.0.13
+    🎵 @melody-core/melody-cli版本检索完毕, 已是最新版本: 1.0.13
     Usage: melody [options] [command]
 
     Options:

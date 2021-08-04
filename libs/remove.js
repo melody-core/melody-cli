@@ -8,17 +8,17 @@ const rootPath = path.resolve(__dirname, "../");
 
 module.exports = async function remove(pk) {
   if (!pk) {
-    console.error("🎵缺少package参数！");
+    console.error("🎵 缺少package参数！");
     process.exit();
   }
   const cache = require("./../cache/index.json");
   const { dependencies } = require("./../package.json");
   const targetPlugin = cache.find((item) => item.name === pk);
   if (!targetPlugin && !dependencies[pk]) {
-    console.log(chalk.yellow("🎵您并没有安装过此套件，无须删除。"));
+    console.log(chalk.yellow("🎵 您并没有安装过此套件，无须删除。"));
     process.exit();
   }
-  const spinner = ora("🎵正在卸载中，请等待...");
+  const spinner = ora("🎵 正在卸载中，请等待...");
   spinner.start();
 
   try {
@@ -37,15 +37,15 @@ module.exports = async function remove(pk) {
       );
     } catch (error) {
       console.error(
-        "🎵缓存写入失败！请运行命令: melody doctor 以修复melody-cli"
+        "🎵 缓存写入失败！请运行命令: melody doctor 以修复melody-cli"
       );
       process.exit();
     }
-    console.log(chalk.green("🎵卸载成功!"));
+    console.log(chalk.green("🎵 卸载成功!"));
   } catch (error) {
     spinner.stop();
     console.error(error);
-    console.error("🎵本地环境出错！请运行命令: melody doctor 以修复melody-cli");
+    console.error("🎵 本地环境出错！请运行命令: melody doctor 以修复melody-cli");
     process.exit();
   }
 };
