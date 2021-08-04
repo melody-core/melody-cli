@@ -20,7 +20,6 @@ module.exports = async (pk) => {
   if (inqres.desc) {
     const targetIndex = cache.findIndex((item) => item.name === pk);
     cache[targetIndex]["desc"] = inqres.desc;
-    console.log("chache,", cache);
     try {
       await fs.promises.writeFile(
         path.resolve(__dirname, "./../cache/index.json"),
