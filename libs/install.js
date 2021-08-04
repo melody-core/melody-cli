@@ -64,5 +64,6 @@ module.exports = async function installPackage(
     process.exit();
   }
   spinner.stop();
-  console.log(chalk.green("🎵 安装成功！执行melody即可查看您新增的命令!"));
+  const prefix = cuCache ? '同步' : '安装';
+  console.log(chalk.green(`🎵 ${prefix}${pluginName}成功！执行melody即可查看您新增的命令!`));
 };
