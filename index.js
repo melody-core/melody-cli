@@ -13,6 +13,7 @@ const desc = require("./libs/desc");
 const help2Doc = require("./libs/helpToDoc");
 const chalk = require("chalk");
 const timeoutPromise = require("./libs/timeoutPromise");
+const { shell } = require("./libs/shell");
 
 class Melody {
   async start() {
@@ -23,6 +24,20 @@ class Melody {
     program
       .version(require("./package.json").version)
       .option("-v, --version", "查看当前版本");
+
+    // doc命令
+    program
+      .command("doc")
+      .description("打开MW音巢官方文档")
+      .action(async (pk) => {
+        help2Doc();
+        try {
+          await shell(`open ${require("./package.json").homepage}`);
+        } catch (error) {
+          process.exit();
+        }
+      });
+
     // 查看官方套件列表命令
     program
       .command("search")
@@ -82,15 +97,17 @@ class Melody {
         try {
           help2Doc();
           packageList = await Promise.race([
-            getPlugins(), 
+            getPlugins(),
             timeoutPromise(5000),
           ]);
-          if(!packageList){
-              throw new Error('');
+          if (!packageList) {
+            throw new Error("");
           }
         } catch (error) {
           console.log();
-          console.error(chalk.red("获取远端套件列表失败，请检测网络环境是否友好。"));
+          console.error(
+            chalk.red("获取远端套件列表失败，请检测网络环境是否友好。")
+          );
           process.exit();
         }
         try {
