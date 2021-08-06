@@ -1,6 +1,6 @@
 {
   "name": "@melody-core/melody-cli",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "(音巢组织)命令行集成管理工具",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "wxyDesign",
   "repository": {
     "type": "git",
-    "url": "https://github.com/melodyWxy/melody-cli.git"
+    "url": "https://github.com/melody-core/melody-cli.git"
   },
   "keywords": [
     "melody",
@@ -42,7 +42,10 @@
     "ora": "^5.4.1"
   },
   "bugs": {
-    "url": "https://github.com/melodyWxy/melody-cli/issues"
+    "url": "https://github.com/melody-core/melody-cli/issues"
   },
-  "homepage": "https://github.com/melodyWxy/melody-cli#readme"
+  "homepage": "https://github.com/melody-core/melody-cli#readme",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  }
 }
