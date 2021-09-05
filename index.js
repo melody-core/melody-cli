@@ -40,9 +40,18 @@ class Melody {
 
     // 查看官方套件列表命令
     program
-      .command("search")
-      .description("列出官方所有套件")
-      .action(async () => {
+      .command("search [pkname]")
+      .description("列出官方套件,查询某包详情")
+      .action(async (pkname) => {
+        if(pkname){
+          try {
+            shell(`open https://www.npmjs.com/package/${pkname}`)
+          } catch (error) {
+            console.error(error);
+            process.exit();
+          }
+          
+        }
         try {
           const packageList = await getPlugins();
           const pluginList = packageList.map((item) => {
