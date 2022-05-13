@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const url = "https://www.npmjs.com/org/melody-core";
 const ora = require("ora");
 const chalk = require("chalk");
+const BASE_CONFIG = require("./../config/base.json");
 
 /**
  * @description: 获取npm包的信息
@@ -10,7 +11,7 @@ const chalk = require("chalk");
  * @return {*}
  */
 function getPlugins() {
-  const spinner = ora("🎵 正在进行检索音巢官方套件列表，请等待...");
+  const spinner = ora(BASE_CONFIG.lib.getPlugins.start);
   spinner.start();
   return fetch(url, {
     headers: {
@@ -22,10 +23,15 @@ function getPlugins() {
     .then((json) => {
       // 取出包信息
       spinner.stop();
-      console.log(chalk.green("🎵 音巢官方套件列表检索完毕!"));
+      console.log(chalk.green(BASE_CONFIG.lib.getPlugins.end));
       const { packages = {} } = json || {};
       const { objects = [] } = packages;
-      return objects.filter((item) => item.name !== "@melody-core/melody-cli");
+      return objects.filter((item) => item.name !== BASE_CONFIG.pkname);
+    })
+    .catch((error) => {
+      spinner.stop();
+      console.error(error);
+      process.exit();
     });
 }
 

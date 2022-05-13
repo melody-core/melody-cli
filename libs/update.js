@@ -6,8 +6,7 @@ const { shell } = require("./shell");
 const getPackageInfo = require("./getPackageInfo");
 
 const rootPath = path.resolve(__dirname, "../");
-
-let registry = "https://mirrors.huaweicloud.com/repository/npm/";
+const BASE_CONFIG = require("./../config/base.json");
 
 async function updateSingle(pk) {
   const cache = require("./../cache/index.json");
@@ -18,9 +17,11 @@ async function updateSingle(pk) {
     const { dependencies } = require("../package.json");
     if (!dependencies[pk] && !cacheItem) {
       console.log(
-        chalk.yellow("🎵 检测到您尚未安装过此套件,您可以运行以下命令安装该套件:")
+        chalk.yellow(
+          "🎵 检测到您尚未安装过此套件,您可以运行以下命令安装该套件:"
+        )
       );
-      console.log(chalk.blue(`melody install ${pk}`));
+      console.log(chalk.blue(`${BASE_CONFIG.bin} install ${pk}`));
       return;
     }
     if (!cacheItem) {
@@ -61,9 +62,16 @@ async function updateSingle(pk) {
       // 更新这个包呀
       spinner.start();
       try {
-        await shell(`yarn upgrade ${pk} --registry="${registry}"`, {
-          cwd: rootPath,
-        });
+        await shell(
+          `yarn upgrade ${pk} ${
+            BASE_CONFIG.registry.url
+              ? "--registry=" + BASE_CONFIG.registry.url
+              : ""
+          }`,
+          {
+            cwd: rootPath,
+          }
+        );
       } catch (error) {
         spinner.stop();
         console.log(chalk.yellow(`🎵 套件${pk} 更新失败，请检测网络环境`));
@@ -91,7 +99,7 @@ async function updateSingle(pk) {
         console.error(error);
         console.log(
           chalk.yellow(
-            `🎵 套件${pk} 写入缓存失败，请使用命令: melody doctor以修复melody-cli。`
+            `🎵 套件${pk} 写入缓存失败，${BASE_CONFIG.lib.update.doctor}`
           )
         );
       }

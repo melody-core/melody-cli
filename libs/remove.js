@@ -3,6 +3,7 @@ const chalk = require("chalk");
 const fs = require("fs");
 const ora = require("ora");
 const { shell } = require("./shell");
+const BASE_CONFIG = require("./../config/base.json")
 
 const rootPath = path.resolve(__dirname, "../");
 
@@ -37,7 +38,7 @@ module.exports = async function remove(pk) {
       );
     } catch (error) {
       console.error(
-        "🎵 缓存写入失败！请运行命令: melody doctor 以修复melody-cli"
+        BASE_CONFIG.lib.remove.error.cache
       );
       process.exit();
     }
@@ -45,7 +46,7 @@ module.exports = async function remove(pk) {
   } catch (error) {
     spinner.stop();
     console.error(error);
-    console.error("🎵 本地环境出错！请运行命令: melody doctor 以修复melody-cli");
+    console.error(BASE_CONFIG.lib.remove.error.env);
     process.exit();
   }
 };

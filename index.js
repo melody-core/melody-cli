@@ -14,6 +14,7 @@ const help2Doc = require("./libs/helpToDoc");
 const chalk = require("chalk");
 const timeoutPromise = require("./libs/timeoutPromise");
 const { shell } = require("./libs/shell");
+const BASE_CONFIG = require("./config/base.json");
 
 class Melody {
   async start() {
@@ -23,12 +24,12 @@ class Melody {
     // 版本
     program
       .version(require("./package.json").version)
-      .option("-v, --version", "查看当前版本");
+      .option("-v, --version", BASE_CONFIG.help.commanders.version.option);
 
     // doc命令
     program
       .command("doc")
-      .description("打开MW音巢官方文档")
+      .description(BASE_CONFIG.help.commanders.doc.description)
       .action(async (pk) => {
         help2Doc();
         try {
@@ -41,34 +42,44 @@ class Melody {
     // 查看官方套件列表命令
     program
       .command("search [pkname]")
-      .description("列出官方套件,查询某包详情")
+      .description(BASE_CONFIG.help.commanders.search.description)
       .action(async (pkname) => {
-        if(pkname){
-          try {
-            shell(`open https://www.npmjs.com/package/${pkname}`)
-          } catch (error) {
-            console.error(error);
-            process.exit();
-          }
-          
+        try {
+          shell(
+            `open ${
+              pkname
+                ? BASE_CONFIG.registry.origin + "/" + pkname
+                : BASE_CONFIG.registry.scopeHome
+            }`
+          );
+        } catch (error) {
+          console.error(error);
+          process.exit();
         }
         try {
-          const packageList = await getPlugins();
+          const packageList =
+            (await await Promise.race([getPlugins(), timeoutPromise(5000)])) ||
+            [];
           const pluginList = packageList.map((item) => {
             return {
               plugin: item.name,
               version: item.version,
               desc: item.description,
               install: cache.find((cacheItem) => cacheItem.name === item.name)
-                ? "已安装"
-                : "未安装",
+                ? BASE_CONFIG.spinner.check.status.has
+                : BASE_CONFIG.spinner.check.status.none,
             };
           });
-          console.table(pluginList);
+
+          if (pluginList && pluginList.length) {
+            console.table(pluginList);
+          } else {
+            console.warn("warn: 网络不太行呢！");
+          }
           process.exit();
         } catch (error) {
           console.log(error);
-          console.error("🎵 获取远端套件列表失败，请检测网络环境是否友好。");
+          console.error(BASE_CONFIG.help.commanders.search.error.network);
           process.exit();
         }
       });
@@ -76,11 +87,13 @@ class Melody {
     // 查看已安装的套件列表
     program
       .command("list")
-      .description("列出已安装的套件列表")
+      .description(BASE_CONFIG.help.commanders.list.description)
       .action(() => {
         try {
           if (!cache.length) {
-            console.log(chalk.yellow("🎵 您尚未安装任何套件。"));
+            console.log(
+              chalk.yellow(BASE_CONFIG.help.commanders.list.help.noCache)
+            );
             help2Doc();
             return;
           }
@@ -91,6 +104,7 @@ class Melody {
           }));
           console.table(logList);
           help2Doc();
+          process.exit();
         } catch (error) {
           console.log(error);
           process.exit();
@@ -100,22 +114,17 @@ class Melody {
     program
       .command("install <package>")
       .alias("i")
-      .description("安装套件")
+      .description(BASE_CONFIG.help.commanders.install.description)
       .action(async (pk) => {
         let packageList = [];
         try {
           help2Doc();
-          packageList = await Promise.race([
-            getPlugins(),
-            timeoutPromise(5000),
-          ]);
-          if (!packageList) {
-            throw new Error("");
-          }
+          packageList =
+            (await Promise.race([getPlugins(), timeoutPromise(5000)])) || [];
         } catch (error) {
-          console.log();
+          console.warn(error);
           console.error(
-            chalk.red("获取远端套件列表失败，请检测网络环境是否友好。")
+            chalk.red(BASE_CONFIG.help.commanders.install.error.network)
           );
           process.exit();
         }
@@ -123,9 +132,7 @@ class Melody {
           await install(pk, packageList);
         } catch (error) {
           console.error(error);
-          console.error(
-            "安装失败，请运行命令: melody doctor, 以修复你的melody-cli。"
-          );
+          console.error(BASE_CONFIG.help.commanders.install.error.install);
         }
         process.exit();
       });
@@ -134,16 +141,14 @@ class Melody {
     program
       .command("remove <package>")
       .alias("delete")
-      .description("删除套件")
+      .description(BASE_CONFIG.help.commanders.remove.description)
       .action(async (pk) => {
         try {
           await remove(pk);
           help2Doc();
         } catch (error) {
           console.error(error);
-          console.error(
-            "卸载失败，请运行命令: melody doctor, 以修复你的melody-cli。"
-          );
+          console.error(BASE_CONFIG.help.commanders.remove.error.remove);
         }
         process.exit();
       });
@@ -151,14 +156,14 @@ class Melody {
     // 更新套件
     program
       .command("update [package]")
-      .description("更新套件")
+      .description(BASE_CONFIG.help.commanders.update.description)
       .action(async (pk) => {
         try {
           await update(pk);
           help2Doc();
         } catch (error) {
           console.error(error);
-          console.error("更新失败,您的网络环境是否正常?");
+          console.error(BASE_CONFIG.help.commanders.update.error.update);
         }
         process.exit();
       });
@@ -166,15 +171,13 @@ class Melody {
     // 更改套件描述
     program
       .command("desc <package>")
-      .description("更改套件描述")
+      .description(BASE_CONFIG.help.commanders.desc.description)
       .action(async (pk) => {
         try {
           await desc(pk);
         } catch (error) {
           console.error(error);
-          console.error(
-            "🎵 更新描述失败，请运行命令: melody doctor 以修复您的melody"
-          );
+          console.error(BASE_CONFIG.help.commanders.desc.error.desc);
         }
         process.exit();
       });
